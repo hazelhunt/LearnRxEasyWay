@@ -61,8 +61,12 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("CreateObserv", "Is unsubscribed: " + someStringSubsr.isUnsubscribed());
 
+        // The same observable as above, just with lambda
+        Observable<String> someShortStringObser = Observable.create(subscriber ->
+                subscriber.onNext("Are you guys have any plans"));
+
         // It's something like subscribe on air, without declaration with using lambdas
-        someStringObserv.subscribe(
+        someShortStringObser.subscribe(
                 s -> Log.d("CreateObserv", s + "later?"),
                 throwable -> Log.d("CreateObserv", throwable.getMessage()),
                 () -> Log.d("CreateObserv", "Observ completed!"))
@@ -105,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         day.setDay("Monday");
 
         // Now have a look at our result
-        noDeferObserv.subscribe(d -> Log.d("DeferObserv", d)).unsubscribe();
+        noDeferObserv.subscribe(d -> Log.d("NoDeferObserv", d)).unsubscribe();
 
         // Now, we are going to do the same with defer operator
         Observable<String> deferObserv = Observable.defer(day::getDayObservable);

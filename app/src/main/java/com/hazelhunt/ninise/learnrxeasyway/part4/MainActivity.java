@@ -12,6 +12,7 @@ import java.util.Objects;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
+import rx.observables.GroupedObservable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -65,5 +66,48 @@ public class MainActivity extends AppCompatActivity {
         //     04-04 14:15:12.524 19953-19953/com.hazelhunt.ninise.learnrxeasyway D/flatmap lambda: item: Cucumber
         //     04-04 14:15:12.524 19953-19953/com.hazelhunt.ninise.learnrxeasyway D/flatmap lambda: item: Potato
 
+
+        // GroupBy
+        Observable.from(Arrays.asList(1,2,3,4,5,6,7,8,9,10)).groupBy(integer -> integer % 2 == 0)
+                .subscribe(value -> value
+                        .toList()
+                        .subscribe(num -> Log.d("groupby", "value: " + num)))
+                .unsubscribe();
+
+        //      Output
+        //      04-06 14:23:21.787 7018-7018/com.hazelhunt.ninise.learnrxeasyway D/groupby: value: [1, 3, 5, 7, 9]
+        //      04-06 14:23:21.787 7018-7018/com.hazelhunt.ninise.learnrxeasyway D/groupby: value: [2, 4, 6, 8, 10]
+
+        // Map
+        StringBuilder builder = new StringBuilder("Hello ");
+        Observable.just(builder)
+                .map(new Func1<StringBuilder, StringBuilder>() {
+                    @Override
+                    public StringBuilder call(StringBuilder stringBuilder) {
+                        return stringBuilder.append("there");
+                    }
+                })
+                .map(new Func1<StringBuilder, StringBuilder>() {
+                    @Override
+                    public StringBuilder call(StringBuilder stringBuilder) {
+                        return stringBuilder.append("!");
+                    }
+                })
+                .subscribe(stringBuilder -> Log.d("map", "string: " + stringBuilder.toString()))
+                .unsubscribe();
+
+        //      Output
+        //      04-06 14:42:56.087 23819-23819/com.hazelhunt.ninise.learnrxeasyway D/map: string: Hello there!
+
+        // With lambda
+        Observable.just(builder)
+                .map(s -> s.append(" My name is"))
+                .map(s -> s.append(" "))
+                .map(s -> s.append("Ninise"))
+                .subscribe(stringBuilder -> Log.d("map", "string: " + stringBuilder.toString()))
+                .unsubscribe();
+
+        //      Output
+        //      04-06 14:42:56.087 23819-23819/com.hazelhunt.ninise.learnrxeasyway D/map: string: Hello there! My name is Ninise
     }
 }

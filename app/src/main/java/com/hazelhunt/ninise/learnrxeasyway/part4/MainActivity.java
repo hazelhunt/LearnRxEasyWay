@@ -109,5 +109,48 @@ public class MainActivity extends AppCompatActivity {
 
         //      Output
         //      04-06 14:42:56.087 23819-23819/com.hazelhunt.ninise.learnrxeasyway D/map: string: Hello there! My name is Ninise
+
+
+        // Scan
+        Observable.just(1,2,3,4,5,6)
+                .scan((x, y) -> x + y)
+                .subscribe(
+                        integer -> Log.d("scan", "number: " + integer)
+                ).unsubscribe();
+
+        //      Output
+        //      04-07 15:27:26.330 32010-32010/com.hazelhunt.ninise.learnrxeasyway D/scan: number: 1
+        //      04-07 15:27:26.330 32010-32010/com.hazelhunt.ninise.learnrxeasyway D/scan: number: 3
+        //      04-07 15:27:26.330 32010-32010/com.hazelhunt.ninise.learnrxeasyway D/scan: number: 6
+        //      04-07 15:27:26.330 32010-32010/com.hazelhunt.ninise.learnrxeasyway D/scan: number: 10
+        //      04-07 15:27:26.330 32010-32010/com.hazelhunt.ninise.learnrxeasyway D/scan: number: 15
+        //      04-07 15:27:26.330 32010-32010/com.hazelhunt.ninise.learnrxeasyway D/scan: number: 21
+
+        // Window
+        final int[] count = {0};
+        Observable.just(1,2,3,4,5)
+                .window(2)
+                .subscribe(integerObservable ->
+                    integerObservable.subscribe(
+                            integer -> Log.d("window", "number: " + integer),
+                            (e) -> {},
+                            () -> Log.d("window", "onCompleted " + count[0]++)
+                    ),
+                        (e) -> {},
+                        () -> Log.d("window", "Completed"))
+                .unsubscribe();
+
+        //      Output
+        //      04-07 15:33:33.470 32010-32010/com.hazelhunt.ninise.learnrxeasyway D/window: number: 1
+        //      04-07 15:33:33.470 32010-32010/com.hazelhunt.ninise.learnrxeasyway D/window: number: 2
+        //      04-07 15:33:33.470 32010-32010/com.hazelhunt.ninise.learnrxeasyway D/window: onCompleted 0
+        //      04-07 15:33:33.470 32010-32010/com.hazelhunt.ninise.learnrxeasyway D/window: number: 3
+        //      04-07 15:33:33.470 32010-32010/com.hazelhunt.ninise.learnrxeasyway D/window: number: 4
+        //      04-07 15:33:33.470 32010-32010/com.hazelhunt.ninise.learnrxeasyway D/window: onCompleted 1
+        //      04-07 15:33:33.470 32010-32010/com.hazelhunt.ninise.learnrxeasyway D/window: number: 5
+        //      04-07 15:33:33.470 32010-32010/com.hazelhunt.ninise.learnrxeasyway D/window: onCompleted 2
+        //      04-07 15:33:33.470 32010-32010/com.hazelhunt.ninise.learnrxeasyway D/window: Completed
+
+
     }
 }

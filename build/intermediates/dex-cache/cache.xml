@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/home/ninise/Dev/GITHUB/LearnRxEasyWay/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="c305e8f227912b5ad541be4d9f9de129fa76e3e7">
+        <dex dex="/home/ninise/Dev/GITHUB/LearnRxEasyWay/app/build/intermediates/pre-dexed/debug/instant-run-bootstrap_d4fdef31501f886b6b4b3780d6919fb4c3259155.jar" />
+    </item>
+
+</items>
